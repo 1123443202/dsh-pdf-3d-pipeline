@@ -1,0 +1,10 @@
+# Keep the repo byte-stable across platforms; only the two Windows shells need CRLF.
+* text=auto eol=lf
+
+*.ps1 text eol=crlf
+*.cmd text eol=crlf
+*.bat text eol=crlf
+
+*.png binary
+*.jpg binary
+*.ico binary

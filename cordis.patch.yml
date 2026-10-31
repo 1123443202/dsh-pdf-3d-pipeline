@@ -1,0 +1,14 @@
+# dsh-pdf-3d-pipeline bundle patch.
+#
+# One row: this package itself. It is a real cordis plugin (lib/index.js), not a
+# wrapper around a binary, so dsh imports it by name from the profile.
+#
+# On load the plugin does exactly one thing: make sure the skill inside this
+# package is visible where dsh scans for skills (~/.dsh/skills/<name>). If the
+# link is already there it does nothing; if the folder holds a real copy it
+# leaves it alone and says so in the boot log. It never throws, because a bundle
+# that throws on load takes the whole harness down with it.
+
+- insert:
+    - id: pdf-3d-pipeline
+      name: 'dsh-pdf-3d-pipeline'

@@ -1,0 +1,35 @@
+# Pipeline work: intermediate and output files. Never committed - the repo is
+# the pipeline, not the parts it made.
+out/
+part.pdf
+part.dwg
+part.dxf
+*.log.txt
+part_segments.json
+drawing_spec.json
+plan.json
+*.build.json
+验收记录.md
+*.SLDPRT
+*.sldprt
+*.STEP
+*.step
+*.stp
+*.PNG
+
+# Backups written by install.ps1 -Register before it edits the dsh profile
+*.bak-*
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Node
+node_modules/
+
+# Editors / OS
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini
+.DS_Store
