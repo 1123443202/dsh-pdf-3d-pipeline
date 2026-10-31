@@ -23,6 +23,7 @@
 |---|---|
 | `SKILL.md` | 技能入口：适用性、六条铁律、8 个阶段、交付前六问 |
 | `AGENTS.md` | 给任意 agent（dsh / Claude Code / Codex / Cursor）的执行契约：停机表、交付定义 |
+| `USAGE.md` | **给别人用的填空指南**：你的图纸该填哪 4 个数、每关盯哪一行、卡住先查哪 |
 | `QUICKSTART.md` | 以虚构示例件 DEMO-01 为例，6 步照着敲 |
 | `run.ps1` | 唯一入口，8 个阶段，末行 `GATE <stage>: PASS/FAIL` 或 `STOP: ...`，退出码 0/1/2 |
 | `reference/` | 操作手册、验收契约（G0~G7）、坑与排障、数据格式、复盘 |
@@ -71,6 +72,34 @@ dsh 扫描的就是 `~/.dsh/skills/<name>/SKILL.md`，junction 即可，不必�
 node .\bin\pdf3d.mjs doctor      # 包完整性 + 各 agent 挂载状态 + run.ps1 preflight
 node .\bin\pdf3d.mjs run verify -Spec .\drawing_spec.json -Step .\out\PART.STEP
 ```
+
+## 怎么用
+
+先在自己图纸上找出**四个数**：总宽（mm）、板厚（mm）、重量（kg）、材质。剩下都是填空。
+
+```powershell
+node .\bin\pdf3d.mjs doctor                                   # 1 自检，有 BLOCK 先修
+& .\run.ps1 spec -Pdf .\你的图纸.pdf                          # 2 抄图注，必须 unparsed=0
+& .\run.ps1 dwg  -Pdf .\你的图纸.pdf -PartWidth 200           # 3 出 DWG/DXF
+& .\run.ps1 part -Dxf .\part.dxf -Depth 8 -Mass 0.47 -Name 零件名
+& .\run.ps1 build -Dxf .\part.dxf -Depth 8 -Name 零件名 -Counterbore 3.4
+& .\run.ps1 verify  -Spec .\drawing_spec.json -Step .\out\零件名.STEP `
+                    -Segments .\part_segments.json -Part .\out\零件名.SLDPRT -OutDir .\out
+& .\run.ps1 deliver -Spec .\drawing_spec.json -Step .\out\零件名.STEP `
+                    -Segments .\part_segments.json -To "D:\交付\零件名" -Mass 0.47
+```
+
+每段末行只有 `GATE <stage>: PASS` 或 `STOP: ...` 两种结局，**见到 STOP 就停**，别往下执行。
+板厚没标就插一步 `& .\run.ps1 thickness -Dxf .\part.dxf -Mass 0.47 -Material aluminium` 反算。
+
+**要看的是判据，不是数字**：`spec` 的 `call-outs` 条数、`part` 的 `outer loop` 与质量偏差、
+`build` 的 `(N个元素)` 是否等于 `segs=N`、`verify` 的 `问题 0 项`。
+每个参数从图纸哪里来、每一关挂了怎么改，见 **[`USAGE.md`](USAGE.md)**。
+
+不想敲命令，装好之后直接对 agent 说：
+
+> 按 pdf-to-3d-pipeline 把 `D:\图纸\XXX.pdf` 做成零件：总宽 200、板厚 8、6061 铝、图纸重量 0.47 kg。
+> 跑完把 `验收记录.md` 和两张面视图给我，哪一关不过就停在那关说明原因。
 
 ## 前置条件
 

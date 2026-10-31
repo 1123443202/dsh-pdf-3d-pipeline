@@ -178,6 +178,10 @@ sys.exit(0 if (not u and d.get('holes')) else 1)
             Say "  (no $Spec - skipping apply_spec; counterbores written only in call-outs will be missing)"
         }
         $OutDir = Abs $OutDir
+        if (-not $PSBoundParameters.ContainsKey('Counterbore')) {
+            Say '  note: -Counterbore not given, defaulting to 6.8 mm (front face only).'
+            Say '        Pass the depth printed in the call-out, or verify.spec will fail if it differs.'
+        }
         $lines = & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $S 'build_from_dwg.ps1') `
             -Segments $Segments -OutDir $OutDir -Name $Name -CounterboreDepth $Counterbore 2>&1
         $lines | ForEach-Object { Say $_ }
