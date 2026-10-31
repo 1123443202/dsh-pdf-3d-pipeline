@@ -1,5 +1,9 @@
 # dsh-pdf-3d-pipeline
 
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Platform: Windows](https://img.shields.io/badge/platform-Windows-lightgrey.svg)](#前置条件)
+[![dsh bundle](https://img.shields.io/badge/dsh-bundle-555.svg)](package.json)
+
 > **图纸转三维流水线** · 技能名 `pdf-to-3d-pipeline` · CLI `pdf3d`
 
 一个 dsh 插件包（bundle），里面装的是**一条会拒绝交付错件的建模流水线**：
@@ -26,6 +30,15 @@
 | `lib/` `bin/` `cordis.patch.yml` | dsh 插件外壳：加载时把技能挂到 `~/.dsh/skills/`，`pdf3d` CLI |
 
 ## 安装
+
+### 0. 拿到代码
+
+```powershell
+git clone https://github.com/1123443202/dsh-pdf-3d-pipeline.git
+cd dsh-pdf-3d-pipeline
+```
+
+放到哪都行，`install.ps1` 会用绝对路径建链接，搬走之后重跑一次即可。
 
 ### 1. 作为 dsh 插件（推荐）
 
