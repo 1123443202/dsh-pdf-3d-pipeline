@@ -101,6 +101,8 @@ node .\bin\pdf3d.mjs doctor                                   # 1 自检，有 B
 > 按 pdf-to-3d-pipeline 把 `D:\图纸\XXX.pdf` 做成零件：总宽 200、板厚 8、6061 铝、图纸重量 0.47 kg。
 > 跑完把 `验收记录.md` 和两张面视图给我，哪一关不过就停在那关说明原因。
 
+完整版 / 极简版 / 续跑版的提示词见 **[`PROMPT.md`](PROMPT.md)**，直接复制粘贴，只改方括号里的值。
+
 ## 前置条件
 
 - Windows + **AutoCAD 已打开**（replay 走 COM）+ SolidWorks（脚本自己拉起、跑完关掉）。
